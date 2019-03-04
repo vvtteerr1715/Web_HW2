@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title>9X9傳輸2</title>
+</head>
+<body>
+<center>
+<h1>MxN乘法表</h1>
+<form method="get" action="hw2.php">
+	請輸入M:
+    <input type="text" name="data1">
+	<p/>
+	請輸入 N:
+    <input type="text" name="data2">
+	<p/>
+    <input type="submit" value="送出">
+</form>
+</center>
+</body>
+</html>

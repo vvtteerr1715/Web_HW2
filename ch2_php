@@ -1,0 +1,26 @@
+<?php
+
+	header("Content-Type:text/html; charset=big5");
+	$data1= $_GET["data1"];
+	$data2= $_GET["data2"];
+	echo "<table width='600' height='20' border='2'>";
+	echo"<caption><font size='5'>$data1 x $data2 乘法表</font></caption>";
+	for($s=1;$s<=$data1;$s++){
+		
+
+        echo "<tr>";
+
+        for($y=1;$y<=$data2;$y++){
+			$i=$s*$y;
+			if($s%2==0){
+				echo"<td bgcolor = yellow>$s X $y = $i</td> ";
+			}
+			else{
+				echo"<td bgcolor = red>$s X $y = $i</td> ";
+			}
+			
+        }
+		echo "</tr>";
+
+    }
+?>

@@ -1,0 +1,49 @@
+<?php
+header("Content-Type:text/html; charset=big5");
+$data1= $_GET["data1"];
+$data2= $_GET["data2"];
+echo "<table width='600' height='20' border='2'>";
+	echo"<caption><font size='5'>$data1 x $data2 矩陣</font></caption>";
+	for($s=1;$s<=$data1;$s++){
+		    
+		echo "<tr>";
+
+        for($y=1;$y<=$data2;$y++){
+			$old_array[$s][$y]=rand(0,100);
+			if($s%2==0){
+				echo"<td bgcolor = yellow>".$old_array[$s][$y].'</td>' ;
+			}
+			else{
+				echo"<td bgcolor = red>".$old_array[$s][$y].'</td>' ;
+			}
+			
+        }
+		
+		echo "</tr>";
+		
+
+    }
+	echo "</table>";
+	
+	echo "<table width='600' height='20' border='2'>";
+	echo"<caption><font size='5'>$data2 x $data1 矩陣</font></caption>";
+	for($s=1;$s<=$data2;$s++){
+		
+		echo "<tr>";
+		 for($y=1;$y<=$data1;$y++){
+			$new_array[$y][$s]=$old_array[$s][$y];
+			if($s%2==0){
+				echo"<td bgcolor = yellow>".$old_array[$y][$s].'</td>' ;
+			}
+			else{
+				echo"<td bgcolor = red>".$old_array[$y][$s].'</td>' ;
+			}
+		 }
+		 
+	}
+	echo "</table>";
+	
+
+
+
+?>

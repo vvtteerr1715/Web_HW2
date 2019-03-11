@@ -1,0 +1,32 @@
+<?php
+	header("Content-Type:text/html; charset=big5");
+	$a1= $_GET["a1"];
+	$a2= $_GET["a2"];
+	$a3= $_GET["a3"];
+	$n= $_GET["n"]; 
+	$total;
+	
+	echo"使用者名稱:".$_GET["username"].'<br/>';
+	echo"購買數量:".'<br/>';
+	echo"php 入門書".$_GET["a1"]."本".'<br/>';
+	echo"c 語言入門書:".$_GET["a2"]."本".'<br/>';
+	echo"資料結構原文書".$_GET["a3"]."本".'<br/>';
+	echo"會員資格".$n.'<br/>';
+	$total=$a1*400+$a2*550+$a3*800;
+	if($n=="金卡會員")
+	{
+		$total*=0.7;
+		echo "折扣0.7折".'<br/>';
+	}
+	if($n=="銀卡會員")
+	{
+		$total*=0.8;
+		echo "折扣0.8折".'<br/>';
+	}
+	if($n=="一般會員")
+	{
+		$total*=0.95;
+		echo "折扣0.95折".'<br/>';
+	}
+	echo "總金額".$total;
+?>

@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title>表單</title>
+</head>
+<body>
+<form method="get" action="ch3.php">
+	使用者名稱:<input type="text" name="username"><p/>
+	購買數量:<br/>
+	php 入門書:<input type="text" name="a1"><br/>
+	c 語言入門書:<input type="text" name="a2"><br/>
+	資料結構原文書:<input type="text" name="a3"><p/>
+	會員資格:<br/>
+	<input type="radio" name="n" value="金卡會員">金卡會員
+	<input type="radio" name="n" value="銀卡會員">銀卡會員
+	<input type="radio" name="n" value="一般會員">一般會員	<p/>
+	<input type="submit" value="送出">
+</form>
+</body>
+</html>

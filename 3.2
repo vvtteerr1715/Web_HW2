@@ -1,0 +1,27 @@
+<?php
+
+	header("Content-Type:text/html; charset=big5");
+	$data1= $_GET["year"];
+	echo "<center>";
+	echo"<caption><font size='5'> 閏年列表</font></caption>";
+	echo "<table width='50' height='20' border='2'>";
+	//$t=0;
+	for($s=1;$s<$year;$s++){
+		 echo "<tr>";
+
+        if ($year%4==0 && ($year%100!=0 || $year%400==0))
+			echo"<td bgcolor = yellow> $year </td> ";
+		echo "</tr>";
+		//$arr=$data[$t++]=$year;
+    }
+	/*$t=0;
+	for($t=1;$t<=arr;$t++)
+	{
+		echo"<td bgcolor = yellow> $data[$t] </td> ";
+ 
+	}*/
+	echo "</table>";
+	echo "</center>";
+	
+?>
+

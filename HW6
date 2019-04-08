@@ -1,0 +1,54 @@
+<?php
+$fileDir = getcwd();
+if(isset($_GET["action"])&&$_GET["action"]=="delete"){
+	unlink($_GET["file"]);	
+	$fileDir =pathinfo($_GET["file"],PATHINFO_DIRNAME);
+	header("Location: ?dir=".$fileDir);
+}
+if(isset($_GET["action"])&&$_GET["action"]=="upload"){
+	if($_FILES["upload"]["error"]==0){
+		move_uploaded_file($_FILES["upload"]["tmp_name"], $_POST["dir"]."\\".$_FILES["upload"]["name"]);
+	}
+	header("Location: ?dir=".$_POST["dir"]);
+}
+?>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=big5" />
+<title>檔案管理</title>
+</head>
+<body>
+<?php
+if(isset($_GET["dir"])&&$_GET["dir"]!=""){
+	$fileDir = $_GET["dir"];
+}
+$fileUplevel = dirname($fileDir);
+$fileResource = scandir($fileDir);
+echo '<table width="500" border="0" align="center" cellpadding="2" cellspacing="1" bgcolor="#000000">';
+echo '<tr><td bgcolor="#FAFAFA"colspan="3">目前路徑：'.$fileDir.'</td></tr>'; 
+echo '<tr><td bgcolor="#FAFAFA"colspan="3" align="center">';
+echo '<form action="?action=upload" method="post" enctype="multipart/form-data" name="form1" id="form1">';
+echo '<a href="?dir='.$fileUplevel.'">上一層</a> | ';
+echo '上傳檔案 <input type="file" name="upload" style="height:20px" />';
+echo '<input type="submit" name="button" style="height:20px" value="送出" />';
+echo '<input name="dir" type="hidden" id="dir" value="'.$fileDir.'" /></form>';
+echo '<tr><td bgcolor="#FAFAFA">名稱</td><td bgcolor="#FAFAFA" width="120" align="center">檔案大小</td><td bgcolor="#FAFAFA" width="80" align="center">功能</td></tr>';
+foreach($fileResource as $fileName){
+	if(is_dir($fileDir.'\\'.$fileName)){
+		if($fileName != "." && $fileName !=".."){			
+			echo '<tr><td bgcolor="#FAFAFA" width="300"><a href="?dir='.$fileDir.'\\'.$fileName.'">&lt;'.$fileName.'&gt;</a></td>';
+			echo '<td bgcolor="#FAFAFA" width="120">&nbsp;</td><td bgcolor="#FAFAFA" width="80">&nbsp;</td></tr>';
+		}
+	}
+}
+foreach($fileResource as $fileName){
+	if(is_file($fileDir.'\\'.$fileName)){
+		$fsize = filesize($fileDir.'\\'.$fileName);
+		echo '<tr><td bgcolor="#FAFAFA" width="300">'.$fileName.'</td>';
+		echo '<td bgcolor="#FAFAFA" width="120" align="right">'.number_format($fsize).' bytes</td>';
+		echo '<td bgcolor="#FAFAFA" width="80" align="center"><a href="?file='.$fileDir.'\\'.$fileName.'&action=delete">刪除</a></td></tr>';
+	}
+}
+echo '</table>';
+?>
+</body>
+</html>

@@ -1,9 +1,16 @@
 <?php 
 header("Content-Type: text/html; charset=utf-8");
 require_once("connMysql.php");
+
+/*	
+  
+ 本程式僅為部分程式碼,無法執行,供作業參考用
+
+*/
+
 session_start();
 //檢查是否經過登入
-if(!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]=="admin")){
+if(!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]=="")){
 	header("Location: index.php");
 }
 //執行登出動作
@@ -55,7 +62,20 @@ $total_pages = ceil($total_records/$pageRow_records);
   </tr>
   <tr>
     <td background="images/admin_r3_c1.jpg"><div id="mainRegion">
-        <!--  -->
+        
+			<?php while($row_RecBoard=mysql_fetch_assoc($RecBoard)){?>
+		<table width="90%" border="0" align="center" cellpadding="4" cellspacing="0">
+          <tr valign="top">
+            <td width="60" align="center" class="underline">        <?php if($row_RecBoard["boardsex"]=="男"){; ?> <img src="images/male.gif" alt="我是男生" width="49" height="49"> <?php }?>
+			<?php if($row_RecBoard["boardsex"]=="女"){; ?> <img src="images/female.gif" alt="我是女生" width="49" height="49"> <?php }?>
+                            <br>
+              <span class="postname"><?php echo $row_RecBoard["boardname"] ?></span>	</td><a href='adminfix.php?id="<? echo $row_RecBoard["boardid"]?>"'>更改</a><a href='admindel.php?id="<? echo $row_RecBoard["boardid"]?>"'>刪除</a>
+		<td class="underline"><span class="smalltext"><?php echo "[".$row_RecBoard["boardid"]."]" ?></span><span class="heading"> <?php echo $row_RecBoard["boardsubject"] ?></span>
+              <p><?php echo $row_RecBoard["boardcontent"] ?></p>
+              <p align="right" class="smalltext"><?php echo $row_RecBoard["boardtime"] ?>                                            </p></td>
+          </tr>  
+		</table>
+		<?php } ?>
        
         
         <table width="90%" border="0" align="center" cellpadding="4" cellspacing="0">

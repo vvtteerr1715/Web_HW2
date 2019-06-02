@@ -2,17 +2,11 @@
 header("Content-Type: text/html; charset=utf-8");
 require_once("connMysql.php");
 session_start();
+date_default_timezone_set("Asia/Taipei");
+$thisYear = date("Y-m-d H:i:s");
+
 //檢查是否經過登入
-if(!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]=="update")){
-	$sql_query = "UPDATE `board` SET ";
-	$sql_query .= "'".$_POST["boardname"]."',";
-	$sql_query .= "'".$_POST["boardsex"]."',";
-	$sql_query .= "'".$_POST["boardtime"]."',";
-	$sql_query .= "'".$_POST["boardmail"]."',";
-	$sql_query .= "'".$_POST["boardweb"]."',";
-	$sql_query .= "'".$_POST["boardcontent"]."')";
-	$sql_query .= "WHERE `boardid`='".$_POST["boardid"];
-	mysql_query($sql_query);
+if(!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]=="")){
 	header("Location: index.php");
 }
 //執行登出動作
@@ -22,7 +16,16 @@ if(isset($_GET["logout"]) && ($_GET["logout"]=="true")){
 }
 //執行更新動作
 if(isset($_POST["action"])&&($_POST["action"]=="update")){	
-	/**/
+	$sql_query = "UPDATE `board` SET"; 
+	$sql_query .= "`boardsubject`='".$_POST["boardsubject"]."',";
+	$sql_query .= "`boardname`='".$_POST["boardname"]."',";
+	$sql_query .= "`boardsex`='".$_POST["boardsex"]."',";
+	$sql_query .= "`boardmail`='".$_POST["boardmail"]."',";
+	$sql_query .= "`boardweb`='".$_POST["boardweb"]."',";
+	$sql_query .= "`boardtime`='".$thisYear."',";
+	$sql_query .= "`boardcontent`='".$_POST["boardcontent"]."'";
+	$sql_query .=" WHERE boardid=".$_POST["boardid"];
+	mysql_query($sql_query);
 	//重新導向回到主畫面
 	header("Location: admin.php");
 }
@@ -58,10 +61,10 @@ $row_RecBoard=mysql_fetch_assoc($RecBoard);
             </tr>
             <tr valign="top">
               <td><p>標題
-                  <input name="boardsubject" type="text" id="boardsubject" value="<?php /**/?>">
+                  <input name="boardsubject" type="text" id="boardsubject" value="<?php echo $row_RecBoard["boardsubject"]?>">
                 </p>
                 <p>姓名
-                  <input name="boardname" type="text" id="boardname" value="<?php /**/?>">
+                  <input name="boardname" type="text" id="boardname" value="<?php echo $row_RecBoard["boardname"]?>">
                 </p>
                 <p>性別
                   <input name="boardsex" type="radio" id="radio" value="男" <?php if($row_RecBoard["boardsex"]=="男"){echo "checked";}?>>
@@ -69,13 +72,13 @@ $row_RecBoard=mysql_fetch_assoc($RecBoard);
                   <input name="boardsex" type="radio" id="radio2" value="女" <?php if($row_RecBoard["boardsex"]=="女"){echo "checked";}?>>
                   女</p>
                 <p>郵件
-                  <input name="boardmail" type="text" id="boardmail" value="<?php /**/?>">
+                  <input name="boardmail" type="text" id="boardmail" value="<?php echo $row_RecBoard["boardmail"]?>">
                 </p>
                 <p>網站
-                  <input name="boardweb" type="text" id="boardweb" value="<?php /**/?>">
+                  <input name="boardweb" type="text" id="boardweb" value="<?php echo $row_RecBoard["boardweb"]?>">
                 </p></td>
               <td align="right"><p>
-                  <textarea name="boardcontent" id="boardcontent" cols="50" rows="8"><?php /**/?></textarea>
+                  <textarea name="boardcontent" id="boardcontent" cols="50" rows="8"><?php echo $row_RecBoard["boardcontent"]?></textarea>
                 </p>
                 <p>
                   <input name="boardid" type="hidden" id="boardid" value="<?php echo $row_RecBoard["boardid"];?>">

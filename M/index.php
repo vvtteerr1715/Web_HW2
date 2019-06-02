@@ -1,6 +1,12 @@
 <?php 
 header("Content-Type: text/html; charset=utf-8");
 require_once("connMysql.php");
+
+	$seldb = @mysql_select_db("phpboard");
+	if (!$seldb) die("資料庫選擇失敗！");
+	$sql_query = "SELECT * FROM `board`";
+	$result = mysql_query($sql_query);	
+
 //預設每頁筆數
 $pageRow_records = 5;
 //預設頁數
@@ -47,25 +53,29 @@ $total_pages = ceil($total_records/$pageRow_records);
   </tr>
   <tr>
     <td background="images/board_r3_c1.jpg"><div id="mainRegion">
-	<?php
-	while($row_result=mysql_fetch_assoc($RecBoard)){
-		echo "<tr>";
-		echo "<td>".$row_result["boardid"]."</td>";
-		echo "<td>".$row_result["boardname"]."</td>";
-		echo "<td>".$row_result["boardsex"]."</td>";
-		echo "<td>".$row_result["boardtime"]."</td>";
-		echo "<td>".$row_result["boardmail"]."</td>";
-		echo "<td>".$row_result["boardweb"]."</td>";
-		echo "<td>".$row_result["boardcontent"]."</td>";
+        
+		<?php while($row_RecBoard=mysql_fetch_assoc($RecBoard)){?>
+		<table width="90%" border="0" align="center" cellpadding="4" cellspacing="0">
+          <tr valign="top">
+            <td width="60" align="center" class="underline">            <?php if($row_RecBoard["boardsex"]=="男"){; ?> <img src="images/male.gif" alt="我是男生" width="49" height="49"> <?php }?>
+			<?php if($row_RecBoard["boardsex"]=="女"){; ?> <img src="images/female.gif" alt="我是女生" width="49" height="49"> <?php }?>
+                            <br>
+              <span class="postname"><?php echo $row_RecBoard["boardname"] ?></span></td>
+		<td class="underline"><span class="smalltext"><?php echo "[".$row_RecBoard["boardid"]."]" ?></span><span class="heading"> <?php echo $row_RecBoard["boardsubject"] ?></span>
+              <p><?php echo $row_RecBoard["boardcontent"] ?></p>
+              <p align="right" class="smalltext"><?php echo $row_RecBoard["boardtime"] ?>                                            </p></td>
+          </tr>  
+		</table>
+		<?php } ?>
 		
-		echo "</tr>";
 		
-	}
-?>
+		
+		
+		
 		
         <table width="90%" border="0" align="center" cellpadding="4" cellspacing="0">
-          <tr>	  
-            <td valign="middle"><p>資料筆數：<?php echo $total_records;?></p></td>
+          <tr>
+            <td valign="middle"><p>資料筆數：<?php echo mysql_num_rows($result);?></p></td>
             <td align="right"><p>
                 <?php if ($num_pages > 1) { // 若不是第一頁則顯示 ?>
                 <a href="?page=1">第一頁</a> | <a href="?page=<?php echo $num_pages-1;?>">上一頁</a> |
@@ -81,7 +91,7 @@ $total_pages = ceil($total_records/$pageRow_records);
   <tr>
     <td><table align="left" border="0" cellpadding="0" cellspacing="0" width="700">
         <tr>
-          <td width="15"><img name="board_r4_c1" src="images/board_r4_c1.jpg" width="15" height="31" border="0" alt="<?php echo ?>"></td>
+          <td width="15"><img name="board_r4_c1" src="images/board_r4_c1.jpg" width="15" height="31" border="0" alt=""></td>
           <td background="images/botbg.jpg"><a href="login.php"><img name="board_r4_c2" src="images/login.jpg" width="77" height="31" border="0" alt="登入管理"></a></td>
           <td align="right" valign="top" background="images/botbg.jpg" class="trademark">© 2014 eHappy Studio All Rights Reserved. </td>
           <td width="15"><img name="board_r4_c8" src="images/board_r4_c8.jpg" width="15" height="31" border="0" alt=""></td>

@@ -1,18 +1,27 @@
 <?php 
 header("Content-Type: text/html; charset=utf-8");
+date_default_timezone_set("Asia/Taipei");
+$thisYear = date("Y-m-d H:i:s");
 require_once("connMysql.php");
 if(isset($_POST["action"])&&($_POST["action"]=="add")){
-	$sql_query = "INSERT INTO `board` (`boardname`,`boardsex`,`boardtime`,`boardmail`,`boardweb`,`boardcontent`) VALUES (";
+	include("connMysql.php");
+	if (!@mysql_select_db("phpboard")) die("資料庫選擇失敗！");
+	$sql_query = "INSERT INTO `board` (`boardsubject`,`boardname`,`boardsex`,`boardmail`,`boardweb`,`boardtime`,`boardcontent`) VALUES (";
+	$sql_query .= "'".$_POST["boardsubject"]."',";
 	$sql_query .= "'".$_POST["boardname"]."',";
 	$sql_query .= "'".$_POST["boardsex"]."',";
-	$sql_query .= "'".$_POST["boardtime"]."',";
 	$sql_query .= "'".$_POST["boardmail"]."',";
 	$sql_query .= "'".$_POST["boardweb"]."',";
+	$sql_query .= "'".$thisYear."',";
 	$sql_query .= "'".$_POST["boardcontent"]."')";
 	mysql_query($sql_query);
-	//重新導向回到主畫面
 	header("Location: index.php");
-}	
+}
+/*	
+  
+ 本程式僅為部分程式碼,無法執行,供作業參考用
+
+*/
 
 ?>
 <html>
@@ -56,7 +65,8 @@ function checkmail(myEmail) {
 }
 </script>
 </head>
-<body bgcolor="#ffffff">
+<body bgcolor="#ffffff" >
+
 <table width="700" border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td><table align="left" border="0" cellpadding="0" cellspacing="0" width="700">
@@ -91,6 +101,7 @@ function checkmail(myEmail) {
                 <p>郵件
                   <input type="text" name="boardmail" id="boardmail">
                 </p>
+				
                 <p>網站
                   <input type="text" name="boardweb" id="boardweb">
                 </p></td>

@@ -1,6 +1,12 @@
 <?php
 header("Content-Type: text/html; charset=utf-8");
 session_start();
+
+/*	
+  
+ 本程式僅為部分程式碼,無法執行,供作業參考用
+
+*/
 //如果沒有登入Session值或是Session值為空則執行登入動作
 if(!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]=="")){
 	if(isset($_POST["username"]) && isset($_POST["passwd"])){
@@ -8,9 +14,10 @@ if(!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]=="")){
 		//選取儲存帳號密碼的資料表
 		
 		//取出帳號密碼的值
-	
+		$username = $db_username;
+		$passwd = $db_password;
 		//比對帳號密碼，若登入成功則進往管理界面，否則就退回主畫面。
-		if(!isset($_POST["username"]) && isset($_POST["passwd"])){
+		if(($_POST["username"]==$username) && ($_POST["passwd"]==$passwd)){
 			$_SESSION["loginMember"]=$username;
 			header("Location: admin.php");
 		}else{

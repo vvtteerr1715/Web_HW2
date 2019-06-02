@@ -3,14 +3,10 @@ header("Content-Type: text/html; charset=utf-8");
 require_once("connMysql.php");
 session_start();
 
-/*	
-  
- 本程式僅為部分程式碼,無法執行,供作業參考用
 
-*/
 
 //檢查是否經過登入
-if(!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]=="delete")){
+if(!isset($_SESSION["loginMember"]) || ($_SESSION["loginMember"]=="")){
 	header("Location: index.php");
 }
 //執行登出動作
@@ -20,7 +16,7 @@ if(isset($_GET["logout"]) && ($_GET["logout"]=="true")){
 }
 //執行刪除動作
 if(isset($_POST["action"])&&($_POST["action"]=="delete")){	
-	$sql_query = "DELETE FROM `board` WHERE `boardid`=".$_POST["boardid"];
+	$sql_query = "DELETE FROM `board` WHERE `boardid` =".$_POST["boardid"];
 	mysql_query($sql_query);
 	//重新導向回到主畫面
 	header("Location: admin.php");
@@ -56,9 +52,9 @@ $row_RecBoard=mysql_fetch_assoc($RecBoard);
               <td class="heading">刪除訪客留言版資料</td>
             </tr>
             <tr valign="top">
-              <td><p><strong>標題</strong>：<?php /**/?> <strong>姓名</strong>：<?php /**/?> <strong>性別</strong>：<?php echo $row_RecBoard["boardsex"];?></p>
-                <p><strong>郵件</strong>：<?php /**/?> <strong>網站</strong>：<?php /**/?></p>
-                <p><?php /**/?></p></td>
+              <td><p><strong>標題</strong>：<?php echo $row_RecBoard["boardsubject"]?> <strong>姓名</strong>：<?php echo $row_RecBoard["boardname"]?> <strong>性別</strong>：<?php echo $row_RecBoard["boardsex"];?></p>
+                <p><strong>郵件</strong>：<?php echo $row_RecBoard["boardmail"]?> <strong>網站</strong>：<?php echo $row_RecBoard["boardweb"]?></p>
+                <p><?php echo $row_RecBoard["boardcontent"]?></p></td>
             </tr>
             <tr valign="top">
               <td align="center"><p>
